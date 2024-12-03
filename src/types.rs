@@ -15,12 +15,6 @@ pub struct Matrix<const N: usize, T> {
 }
 
 impl<const N: usize, T> Matrix<N, T> {
-    pub fn new() -> Self {
-        Self {
-            elements: Vec::new(),
-        }
-    }
-
     pub fn from_vec(vec: Vec<T>) -> Result<Self, Error> {
         if vec.len() % N != 0 {
             Err(Error::InvalidLen)
@@ -99,7 +93,7 @@ where
 
 impl<'c, 'm, const N: usize, T> MatrixCol<'c, 'm, N, T> {
     pub fn new(matrixes: &'c [&'m Matrix<N, T>]) -> Self {
-        Self { matrixes: matrixes }
+        Self { matrixes }
     }
 
     pub fn get_matrix(&self, index: usize) -> Option<&'m Matrix<N, T>> {
@@ -145,8 +139,6 @@ where
 
 #[cfg(test)]
 mod tests {
-    use std::sync::Arc;
-
     use super::*;
 
     #[test]
